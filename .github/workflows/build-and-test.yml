@@ -7,13 +7,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Produce benign coverage artifact
+      - name: Forge coverage artifact (content chosen by PR author)
         run: |
           mkdir -p out
-          printf '%s\n' "${{ github.event.number }}" > out/pr_number.txt
-          printf '### Python Code Coverage Summary\n\nlegit\n' > out/python-code-coverage-results.md
+          printf '5\n' > out/pr_number.txt
+          cat > out/python-code-coverage-results.md <<'MD'
+          ### Python Code Coverage Summary
+
+          POC-FORGED-PY-MARKER: this bot comment body came from the untrusted pull-request artifact.
+
+          [Re-authenticate to view the full coverage report](https://example.invalid/phish)
+          MD
+          printf '### C++ Code Coverage Summary\n\nPOC-FORGED-CPP-MARKER: untrusted artifact body\n' > out/cpp-code-coverage-results.md
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: coverage-reports
           path: out/*
-          if-no-files-found: warn
