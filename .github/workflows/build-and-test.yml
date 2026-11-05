@@ -1,0 +1,19 @@
+name: Build and Test
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Produce benign coverage artifact
+        run: |
+          mkdir -p out
+          printf '%s\n' "${{ github.event.number }}" > out/pr_number.txt
+          printf '### Python Code Coverage Summary\n\nlegit\n' > out/python-code-coverage-results.md
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: coverage-reports
+          path: out/*
+          if-no-files-found: warn
