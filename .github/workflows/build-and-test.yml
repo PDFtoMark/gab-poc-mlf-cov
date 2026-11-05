@@ -10,7 +10,7 @@ jobs:
       - name: Forge coverage artifact (content chosen by PR author)
         run: |
           mkdir -p out
-          printf '1\n' > out/pr_number.txt
+          printf '5\n' > out/pr_number.txt
           cat > out/python-code-coverage-results.md <<'MD'
           ### Python Code Coverage Summary
 
